@@ -296,3 +296,56 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+//register page
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("registerForm");
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirm_password");
+    const errorSpan = document.getElementById("passwordError");
+
+    // Pull variables globally from the window object
+    const currentLang = window.currentLang || "en";
+    const registrationStatus = window.registrationStatus || "";
+
+    // Translated UI alerts
+    const messages = {
+        en: {
+            mismatch: "Passwords do not match!",
+            success: "Registered successfully!",
+            failed: "Registration failed. Please try again."
+        },
+        sw: {
+            mismatch: "Nenosiri hazifanani!",
+            success: "Umesajiliwa kwa mafanikio!",
+            failed: "Usajili umeshindikana. Tafadhali jaribu tena."
+        }
+    };
+
+    // 1. Instant Frontend Validation (Stops execution before data leaves browser)
+    if (form) {
+        form.addEventListener("submit", function (e) {
+            if (password.value !== confirmPassword.value) {
+                e.preventDefault(); // Stop the form from submitting
+                errorSpan.textContent = messages[currentLang].mismatch;
+                confirmPassword.style.borderColor = "#ff4d4d";
+            }
+        });
+
+        confirmPassword.addEventListener("input", function() {
+            if (password.value === confirmPassword.value) {
+                errorSpan.textContent = "";
+                confirmPassword.style.borderColor = "";
+            }
+        });
+    }
+
+    // 2. Post-DB Save Alerts & Window Routing
+    if (registrationStatus === "success") {
+        alert(messages[currentLang].success);
+        window.location.href = "login.php"; // <--- THIS LINE PROCEEDS TO THE LOGIN PAGE
+    } else if (registrationStatus === "mismatch") {
+        alert(messages[currentLang].mismatch);
+    } else if (registrationStatus === "failed") {
+        alert(messages[currentLang].failed);
+    }
+});

@@ -997,6 +997,25 @@ body {
     color: #e0e6ed;
     font-size: 0.95rem;
 }
+/* Error styling for mismatched passwords */
+.error-text {
+    color: #ff4d4d;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    display: block;
+    font-weight: 500;
+}
+
+/* Optional styling fixes to match glassmorphism fields */
+.password-field-wrapper {
+    width: 100%;
+    display: flex;
+    position: relative;
+}
+
+.password-field-wrapper input {
+    width: 100%;
+}
 
 /* ==========================================
    4. FORM CONTROLS & UTILITY INPUT LAYOUTS
@@ -1535,3 +1554,777 @@ body {
 .password-toggle-btn:active {
     transform: scale(0.9); /* Subtle press animation */
 }
+/* ==========================================================================
+   CLIENT DASHBOARD LAYOUT STYLES
+   ========================================================================== */
+
+.dashboard-container {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.welcome-banner {
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.welcome-banner h2 {
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+/* Core UI Actions Grid Matrix */
+.actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.dashboard-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    color: #ffffff;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(66, 133, 244, 0.4);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.dashboard-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.dashboard-card p {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.5;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.btn-action-link {
+    display: block;
+    text-align: center;
+    background: #4285F4;
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: background 0.2s ease;
+}
+
+.btn-action-link:hover {
+    background: #357ae8;
+}
+
+/* Secondary Urgent Quick Dial Section */
+.emergency-bar {
+    background: rgba(255, 77, 77, 0.15);
+    border: 1px solid rgba(255, 77, 77, 0.3);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.emergency-info h4 {
+    color: #ff4d4d;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.emergency-info p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+}
+
+.btn-emergency-call {
+    background: #ff4d4d;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s ease;
+}
+
+.btn-emergency-call:hover {
+    background: #e04343;
+}
+
+.footer-navigation {
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 25px;
+}
+
+.btn-logout-secure {
+    display: inline-block;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 8px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.btn-logout-secure:hover {
+    color: #ff4d4d;
+    border-color: #ff4d4d;
+    background: rgba(255, 77, 77, 0.05);
+}
+
+/* Global modifications needed for layout alignments */
+.hero-wrapper-top-aligned {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+.subtext-muted {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.highlight-white {
+    color: #ffffff;
+}
+/* ==========================================================================
+   POST JOB FORM STYLES
+   ========================================================================== */
+
+.form-container-card {
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.form-group label {
+    font-size: 0.95rem;
+    color: #ffffff;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #4285F4;
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 8px rgba(66, 133, 244, 0.3);
+}
+
+select.form-control option {
+    background: #1a1a2e; /* Prevents white text disappearing on white background on some browsers */
+    color: #ffffff;
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
+}
+
+.btn-submit-job {
+    width: 100%;
+    background: #2ecc71;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    margin-top: 10px;
+}
+
+.btn-submit-job:hover {
+    background: #27ae60;
+}
+
+.alert-msg {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 0.95rem;
+}
+.alert-success { background: rgba(46, 204, 113, 0.2); border: 1px solid #2ecc71; color: #2ecc71; }
+.alert-error { background: rgba(255, 77, 77, 0.2); border: 1px solid #ff4d4d; color: #ff4d4d; }
+/* ==========================================================================
+   BROWSE FUNDIS DIRECTORY STYLES
+   ========================================================================== */
+
+.search-filter-bar {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 30px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.search-filter-bar .form-group {
+    margin-bottom: 0;
+    flex: 1;
+    min-width: 200px;
+}
+
+.btn-filter {
+    background: #4285F4;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    height: 46px;
+    margin-top: auto;
+}
+
+.btn-filter:hover { background: #357ae8; }
+
+/* Fundi Cards Grid Matrix */
+.fundi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.fundi-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #ffffff;
+    transition: transform 0.3s ease;
+}
+
+.fundi-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(46, 204, 113, 0.4);
+}
+
+.fundi-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.fundi-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    border: 2px solid #4285F4;
+}
+
+.fundi-meta h3 {
+    font-size: 1.15rem;
+    margin-bottom: 4px;
+}
+
+.badge-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    border-radius: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.badge-trade { background: rgba(66, 133, 244, 0.2); color: #4285F4; border: 1px solid rgba(66,133,244,0.3); }
+.badge-rating { background: rgba(241, 196, 15, 0.2); color: #f1c40f; border: 1px solid rgba(241,196,15,0.3); }
+
+.fundi-body {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.4;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.fundi-body p { margin-bottom: 8px; }
+
+.fundi-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.btn-card-view {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+.btn-card-view:hover { background: rgba(255,255,255,0.1); }
+
+.btn-card-call {
+    background: #2ecc71;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+.btn-card-call:hover { background: #27ae60; }
+
+.no-records {
+    text-align: center;
+    padding: 40px;
+    color: rgba(255,255,255,0.5);
+    font-size: 1.1rem;
+    width: 100%;
+}
+/* ==========================================================================
+   ADVANCED FUNDI MANAGEMENT WORKSPACE STYLES
+   ========================================================================== */
+
+/* Top Quick Control Bar */
+.top-control-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 12px 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Availability Switch Styling */
+.availability-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.switch-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.toggle-status-badge {
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 20px;
+    text-transform: uppercase;
+    background: rgba(46, 204, 113, 0.2);
+    color: #2ecc71;
+    border: 1px solid rgba(46, 204, 113, 0.4);
+}
+
+/* Internal Live Job Feed Preview Section */
+.live-feed-section {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 35px;
+    text-align: left;
+}
+
+.feed-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 12px;
+}
+
+.feed-header h3 {
+    font-size: 1.25rem;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.pulse-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: #2ecc71;
+    font-weight: 600;
+}
+
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: #2ecc71;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7);
+    animation: pulseGlow 1.8s infinite;
+}
+
+@keyframes pulseGlow {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(46, 204, 113, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+}
+
+/* Micro Lead Items */
+.lead-row {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    transition: background 0.2s;
+}
+
+.lead-row:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(46, 204, 113, 0.3);
+}
+
+.lead-details h4 {
+    font-size: 1.05rem;
+    color: #ffffff;
+    margin-bottom: 6px;
+}
+
+.lead-meta {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.lead-meta span { display: inline-flex; align-items: center; gap: 4px; }
+.text-cash { color: #2ecc71; font-weight: 600; }
+
+.btn-quick-bid {
+    background: #2ecc71;
+    color: white;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+.btn-quick-bid:hover { background: #27ae60; }
+/* ==========================================================================
+   AVAILABLE JOBS & BIDDING SYSTEM STYLES
+   ========================================================================== */
+
+.job-feed-container {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.job-post-card {
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 25px;
+    text-align: left;
+    color: #ffffff;
+}
+
+.job-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.job-title-block h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.job-tags-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.job-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 20px;
+}
+
+/* Embedded Bidding Drawer Form */
+.bid-drawer-form {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(46, 204, 113, 0.3);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 15px;
+}
+
+.bid-drawer-form h4 {
+    color: #2ecc71;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.bid-form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.btn-toggle-bid {
+    background: #2ecc71;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-toggle-bid:hover { background: #27ae60; }
+/* ==========================================================================
+   CLIENT MY REQUESTS & BID REVIEW STYLES
+   ========================================================================== */
+
+.request-manager-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.request-header-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.bid-review-list {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.15);
+}
+
+.bid-proposal-row {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.bid-proposal-row:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(66, 133, 244, 0.3);
+}
+
+.btn-accept-bid {
+    background: #2ecc71;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.2s;
+}
+.btn-accept-bid:hover { background: #27ae60; }
+
+.status-indicator-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.status-pending { background: rgba(241, 196, 15, 0.15); color: #f1c40f; border: 1px solid #f1c40f; }
+.status-assigned { background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid #2ecc71; }
+/* ==========================================================================
+   FUNDI MY QUOTES LEDGER STYLES
+   ========================================================================== */
+
+.ledger-wrapper {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.ledger-card {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 20px;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    color: #ffffff;
+}
+
+.ledger-info h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.ledger-details {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.5;
+}
+
+.ledger-financials {
+    text-align: right;
+    min-width: 150px;
+}
+
+.ledger-price {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #2ecc71;
+    margin-bottom: 8px;
+}
+
+/* Status Badges for Bids Ledger */
+.bid-status-badge {
+    display: inline-block;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.badge-bid-pending { background: rgba(241, 196, 15, 0.15); color: #f1c40f; border: 1px solid #f1c40f; }
+.badge-bid-accepted { background: rgba(46, 204, 113, 0.2); color: #2ecc71; border: 1px solid #2ecc71; }
+.badge-bid-declined { background: rgba(255, 77, 77, 0.15); color: #ff4d4d; border: 1px solid #ff4d4d; }
+
+.btn-contact-client {
+    display: inline-block;
+    margin-top: 10px;
+    background: #4285F4;
+    color: white;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+.btn-contact-client:hover { background: #357ae8; }

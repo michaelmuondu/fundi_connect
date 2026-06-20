@@ -1,4 +1,7 @@
 <?php
+// Include your database connection layout
+include 'connect.php';
+
 // Start a secure user session layout
 if (session_status() === PHP_SESSION_NONE) {
     session_start([
@@ -9,21 +12,22 @@ if (session_status() === PHP_SESSION_NONE) {
     ]);
 }
 
-// 1. Language Controller Logic
-if (isset($_GET['lang'])) {
-    $allowed_langs = ['en', 'sw'];
-    if (in_array($_GET['lang'], $allowed_langs)) {
-        $_SESSION['lang'] = $_GET['lang'];
-    }
-    // Redirect cleanly to drop the query parameter from URL string
-    header("Location: login.php");
-    exit;
-}
+// Initialize error variable
+$login_error = "";
 
-// Default to English if no preference is saved in session
+// Language Controller Logic
 $current_lang = isset($_SESSION['lang']) ? $_SESSION['lang'] : 'en';
 
-// 2. Bilingual Dictionaries Translation Matrix
+// Check if user is changing language via GET request
+if (isset($_GET['lang'])) {
+    $requested_lang = $_GET['lang'];
+    if (in_array($requested_lang, ['en', 'sw'])) {
+        $_SESSION['lang'] = $requested_lang;
+        $current_lang = $requested_lang;
+    }
+}
+
+// Bilingual Dictionaries Translation Matrix (Added login errors)
 $lang_dict = [
     'en' => [
         'title' => 'Welcome Back',
@@ -36,7 +40,9 @@ $lang_dict = [
         'toggle_btn' => 'Badilisha Kuja Kiswahili 🇰🇪',
         'toggle_code' => 'sw',
         'placeholder_email' => 'Enter your email',
-        'placeholder_pass' => 'Enter your password'
+        'placeholder_pass' => 'Enter your password',
+        'err_password' => 'Invalid password!',
+        'err_no_user' => 'No account found with that email!'
     ],
     'sw' => [
         'title' => 'Karibu Tena',
@@ -46,14 +52,52 @@ $lang_dict = [
         'btn_login' => 'Ingia Lango',
         'or' => 'AU',
         'btn_google' => 'Endelea na Google',
-        'toggle_btn' => 'Switch to English ',
+        'toggle_btn' => 'Switch to English 🇬🇧',
         'toggle_code' => 'en',
         'placeholder_email' => 'Weka barua pepe yako',
-        'placeholder_pass' => 'Weka neno siri lako'
+        'placeholder_pass' => 'Weka neno siri lako',
+        'err_password' => 'Nenosiri si sahihi!',
+        'err_no_user' => 'Hakuna akaunti iliyopatikana na barua pepe hiyo!'
     ]
 ];
 
 $text = $lang_dict[$current_lang];
+
+// LIVE DATABASE AUTHENTICATION ENGINE
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $password = $_POST['password'];
+
+    $sql = "SELECT * FROM users WHERE email = '$email'";
+    $result = mysqli_query($conn, $sql);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        $user = mysqli_fetch_assoc($result);
+
+        // Verifies the raw login password against your database's bcrypt hash string
+        if (password_verify($password, $user['password'])) {
+            // 1. Assign values to global session storage
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['role'] = $user['role']; 
+            
+            // 2. Redirect execution straight to specialized role dashboards
+            if ($_SESSION['role'] === 'fundi') {
+                header("Location: fundi_dashboard.php");
+            } else if ($_SESSION['role'] === 'client') {
+                header("Location: client_dashboard.php");
+            } else {
+                header("Location: index.php"); // Fallback if no specific role is detected
+            }
+            exit;
+            
+        } else {
+            $login_error = $text['err_password'];
+        }
+    } else {
+        $login_error = $text['err_no_user'];
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $current_lang; ?>">
@@ -75,7 +119,6 @@ $text = $lang_dict[$current_lang];
     </div>
 
     <main class="login-hero-wrapper">
-        
         <div class="glass-login-card">
             
             <div class="card-header">
@@ -83,26 +126,32 @@ $text = $lang_dict[$current_lang];
                 <p><?php echo htmlspecialchars($text['subtitle']); ?></p>
             </div>
 
-           <form action="auth_process.php" method="POST" class="login-form">
+            <?php if (!empty($login_error)): ?>
+                <div style="color: #ff4d4d; font-weight: 500; font-size: 0.9rem; margin-bottom: 15px; text-align: center;">
+                    ⚠️ <?php echo $login_error; ?>
+                </div>
+            <?php endif; ?>
+
+            <form action="login.php" method="POST" class="login-form">
     
-    <div class="input-group">
-        <label for="email"><?php echo $text['email']; ?></label>
-        <input type="email" id="email" name="email" placeholder="<?php echo $text['placeholder_email']; ?>" required>
-    </div>
+                <div class="input-group">
+                    <label for="email"><?php echo $text['email']; ?></label>
+                    <input type="email" id="email" name="email" placeholder="<?php echo $text['placeholder_email']; ?>" required>
+                </div>
 
-    <div class="input-group">
-        <label for="password"><?php echo $text['password'] ?? 'Password'; ?></label>
-        <div class="password-field-wrapper">
-            <input type="password" id="password" name="password" placeholder="••••••••" required>
-            
-            <button type="button" id="passwordToggle" class="password-toggle-btn" aria-label="Toggle password visibility">
-                <span class="eye-icon">👁️</span>
-            </button>
-        </div>
-    </div>
+                <div class="input-group">
+                    <label for="password"><?php echo $text['password'] ?? 'Password'; ?></label>
+                    <div class="password-field-wrapper">
+                        <input type="password" id="password" name="password" placeholder="••••••••" required>
+                        
+                        <button type="button" id="passwordToggle" class="password-toggle-btn" aria-label="Toggle password visibility">
+                            <span class="eye-icon">👁️</span>
+                        </button>
+                    </div>
+                </div>
 
-    <button type="submit" class="btn-submit-auth"><?php echo $text['btn_login']; ?></button>
-</form>
+                <button type="submit" class="btn-submit-auth"><?php echo $text['btn_login']; ?></button>
+            </form>
 
             <div class="auth-divider">
                 <span><?php echo $text['or']; ?></span>
