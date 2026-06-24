@@ -10,7 +10,7 @@ if (isset($_GET['lang'])) {
 }
 $current_lang = isset($_SESSION['lang']) ? $_SESSION['lang'] : 'en';
 
-// 3. Translations Array
+// 3. Translations Array 
 if ($current_lang === 'sw') {
     $text = [
         'back_home'        => '← Nyumbani',
@@ -20,6 +20,10 @@ if ($current_lang === 'sw') {
         'subtitle'         => 'Unganishwa na wataalamu wa ndani haraka na salama.',
         'lbl_name'         => 'Majina Kamili',
         'lbl_email'        => 'Anwani ya Barua Pepe',
+        'lbl_role'         => 'Sajili Kama',
+        'opt_select'       => '-- Chagua aina ya akaunti --',
+        'opt_client'       => 'Mteja (Natafuta Fundi)',
+        'opt_fundi'        => 'Fundi (Natoa Huduma)',
         'lbl_pass'         => 'Nenosiri',
         'lbl_confirm_pass' => 'Thibitisha Nenosiri',
         'btn_submit'       => 'Sajili',
@@ -35,6 +39,10 @@ if ($current_lang === 'sw') {
         'subtitle'         => 'Connect with local experts quickly and securely.',
         'lbl_name'         => 'Full Name',
         'lbl_email'        => 'Email Address',
+        'lbl_role'         => 'Register As',
+        'opt_select'       => '-- Select account type --',
+        'opt_client'       => 'Client (I want to hire a Fundi)',
+        'opt_fundi'        => 'Fundi (I want to offer services)',
         'lbl_pass'         => 'Password',
         'lbl_confirm_pass' => 'Confirm Password',
         'btn_submit'       => 'Register',
@@ -43,31 +51,37 @@ if ($current_lang === 'sw') {
     ];
 }
 
-// 4. Real Database Registration Logic
+// 4. Database Registration Logic with INSTANT REDIRECT
 $registration_status = "";
 
 if (isset($_POST['register'])) {
-    // Note: 'username' maps to the 'fullname' field in your HTML form input
     $username = mysqli_real_escape_string($conn, $_POST['fullname']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $role = mysqli_real_escape_string($conn, $_POST['role']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
-    // Double check passwords match on backend side
     if ($password !== $confirm_password) {
         $registration_status = "mismatch";
+        echo "<script>alert('Passwords do not match! / Nenosiri hazilingani!');</script>";
     } else {
-        // Hash the password securely using bcrypt
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        if ($role === 'client' || $role === 'fundi') {
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        // FIXED: Changed '$password' to '$hashed_password' so your database is secure
-        $sql = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$hashed_password')";
-        $result = mysqli_query($conn, $sql);
+            $sql = "INSERT INTO users (username, email, password, role) VALUES ('$username', '$email', '$hashed_password', '$role')";
+            $result = mysqli_query($conn, $sql);
 
-        if ($result) {
-            $registration_status = "success";
+            if ($result) {
+                // SUCCESS: Clear session data if needed and redirect cleanly
+                header("Location: login.php?status=registered");
+                exit(); // Stop script execution right here so the redirect happens cleanly
+            } else {
+                $registration_status = "failed";
+                // If it fails, let's output the direct database error so we can fix it instantly
+                die("Database Error: " . mysqli_error($conn));
+            }
         } else {
-            $registration_status = "failed";
+            die("Invalid role configuration.");
         }
     }
 }
@@ -79,6 +93,25 @@ if (isset($_POST['register'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fundi Connect - <?php echo $text['title']; ?></title>
     <link rel="stylesheet" href="assets/styles.css">
+    <style>
+        .password-field-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .password-field-wrapper input {
+            width: 100%;
+            padding-right: 45px;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.7);
+            user-select: none;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
 
@@ -113,9 +146,19 @@ if (isset($_POST['register'])) {
                 </div>
 
                 <div class="input-group">
+                    <label id="lblRole" for="role"><?php echo $text['lbl_role']; ?></label>
+                    <select id="role" name="role" required style="width: 100%; padding: 12px; border-radius: 8px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; font-size: 1rem; outline: none; transition: 0.3s; margin-top: 5px;">
+                        <option value="" disabled selected style="background: #2a2e3d; color: #fff;"><?php echo $text['opt_select']; ?></option>
+                        <option value="client" style="background: #2a2e3d; color: #fff;"><?php echo $text['opt_client']; ?></option>
+                        <option value="fundi" style="background: #2a2e3d; color: #fff;"><?php echo $text['opt_fundi']; ?></option>
+                    </select>
+                </div>
+
+                <div class="input-group">
                     <label id="lblPassword" for="password"><?php echo $text['lbl_pass']; ?></label>
                     <div class="password-field-wrapper">
                         <input type="password" id="password" name="password" placeholder="••••••••" required>
+                        <span class="toggle-password" onclick="togglePassVisibility('password', this)">👁️</span>
                     </div>
                 </div>
 
@@ -123,6 +166,7 @@ if (isset($_POST['register'])) {
                     <label id="lblConfirmPassword" for="confirm_password"><?php echo $text['lbl_confirm_pass']; ?></label>
                     <div class="password-field-wrapper">
                         <input type="password" id="confirm_password" name="confirm_password" placeholder="••••••••" required>
+                        <span class="toggle-password" onclick="togglePassVisibility('confirm_password', this)">👁️</span>
                     </div>
                     <span id="passwordError" class="error-text"></span>
                 </div>
@@ -140,8 +184,18 @@ if (isset($_POST['register'])) {
     <script>
         window.currentLang = "<?php echo $current_lang; ?>";
         window.registrationStatus = "<?php echo $registration_status; ?>";
+
+        function togglePassVisibility(inputId, toggleIcon) {
+            const passwordInput = document.getElementById(inputId);
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleIcon.textContent = "🙈";
+            } else {
+                passwordInput.type = "password";
+                toggleIcon.textContent = "👁️";
+            }
+        }
     </script>
-    
     <script src="assets/scripts.js"></script>
 </body>
 </html>

@@ -18,6 +18,9 @@ if (!isset($_SESSION['page_views'])) {
 }
 
 ?>
+<?php
+include 'connect.php'; // CRITICAL: This must be at the very top of index.php
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -125,144 +128,173 @@ if (!isset($_SESSION['page_views'])) {
         </div>
     </section>
 
-    <!-- 4. Search and Listing Directory Grid -->
-    <section class="main-content">
+ <section class="main-content">
+
+    <div class="search-hub">
+        <h2>Find a Reliable Fundi Near You</h2>
+        <p>Search for plumbers, electricians, carpenters and more.</p>
+
+
+    <div class="category-grid">
+        <div class="category-card active" data-category="all">
+            <div class="card-icon">🛠️</div>
+            <h3>All Services</h3>
+    </div>
+        <div class="category-card" data-category="Plumbing">
+            <div class="card-icon">🪠</div>
+            <h3>Plumbing</h3>
+    </div>
+        <div class="category-card" data-category="Electrical">
+            <div class="card-icon">⚡</div>
+            <h3>Electrical</h3>
+    </div>
+        <div class="category-card" data-category="Carpentry">
+            <div class="card-icon">🪚</div>
+            <h3>Carpentry</h3>
+    </div>
+        <div class="category-card" data-category="Masonry">
+            <div class="card-icon">🧱</div>
+            <h3>Masonry</h3>
+    </div>
+</div>
+// FAQS
+     <section class="faq-section" style="max-width: 800px; margin: 60px auto; padding: 0 20px; font-family: sans-serif;">
         
-        <div class="search-hub">
-            <h2>Find a Reliable Fundi Near You</h2>
-            <p>Select a category or search directly to find vetted professionals in Nairobi.</p>
+        <div class="section-header" style="text-align: center; margin-bottom: 40px;">
+            <h2 style="font-size: 2rem; margin-bottom: 10px; color: #4285F4; font-weight: bold;">Frequently Asked Questions 🇰🇪</h2>
+            <p style="color: #333333; font-size: 1.1rem;">Got questions about Fundi Connect? We've got answers.</p>
+        </div>
+
+        <div class="faq-container" style="display: flex; flex-direction: column; gap: 15px;">
             
-            <div class="search-controls">
-                <input type="text" id="fundiSearch" placeholder="Search for 'plumber', 'electrician'...">
-                <select id="locationFilter">
-                    <option value="all">All Locations</option>
-                    <option value="nairobi-cbd">Nairobi CBD</option>
-                    <option value="westlands">Westlands</option>
-                    <option value="kilimani">Kilimani</option>
-                    <option value="kasarani">Kasarani</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="category-grid">
-            <div class="category-card active" data-category="all">
-                <div class="card-icon">🛠️</div>
-                <h3>All Services</h3>
-            </div>
-            <div class="category-card" data-category="plumbing">
-                <div class="card-icon">🪠</div>
-                <h3>Plumbing</h3>
-            </div>
-            <div class="category-card" data-category="electrical">
-                <div class="card-icon">⚡</div>
-                <h3>Electrical</h3>
-            </div>
-            <div class="category-card" data-category="carpentry">
-                <div class="card-icon">🪚</div>
-                <h3>Carpentry</h3>
-            </div>
-            <div class="category-card" data-category="masonry">
-                <div class="card-icon">🧱</div>
-                <h3>Masonry</h3>
-            </div>
-        </div>
-
-        <div class="fundi-listings" id="fundiListings">
-            <div class="fundi-card" data-category="plumbing" data-location="westlands">
-                <div class="fundi-badge">Verified</div>
-                <h3>John Kamau</h3>
-                <p class="specialty">Master Plumber</p>
-                <p class="location">📍 Westlands, Nairobi</p>
-                <div class="rating">⭐ 4.9 (24 Reviews)</div>
-                <button class="btn-connect" onclick="connectFundi('John Kamau')">Connect Now</button>
-            </div>
-
-            <div class="fundi-card" data-category="electrical" data-location="kilimani">
-                <div class="fundi-badge">Verified</div>
-                <h3>David Omondi</h3>
-                <p class="specialty">Certified Electrician</p>
-                <p class="location">📍 Kilimani, Nairobi</p>
-                <div class="rating">⭐ 4.8 (19 Reviews)</div>
-                <button class="btn-connect" onclick="connectFundi('David Omondi')">Connect Now</button>
-            </div>
-
-            <div class="fundi-card" data-category="carpentry" data-location="nairobi-cbd">
-                <div class="fundi-badge">Top Rated</div>
-                <h3>Alice Mwangi</h3>
-                <p class="specialty">Furniture & Cabinet Maker</p>
-                <p class="location">📍 Nairobi CBD</p>
-                <div class="rating">⭐ 5.0 (32 Reviews)</div>
-                <button class="btn-connect" onclick="connectFundi('Alice Mwangi')">Connect Now</button>
-            </div>
-
-            <div class="fundi-card" data-category="masonry" data-location="kasarani">
-                <div class="fundi-badge">Verified</div>
-                <h3>Peter Otieno</h3>
-                <p class="specialty">Brick & Tile Mason</p>
-                <p class="location">📍 Kasarani, Nairobi</p>
-                <div class="rating">⭐ 4.7 (15 Reviews)</div>
-                <button class="btn-connect" onclick="connectFundi('Peter Otieno')">Connect Now</button>
-            </div>
-        </div>
-
-        <div id="connectionToast" class="toast-notification"></div>
-    </section>
-
-    <!-- 5. Global Website Footer Section -->
-    <footer class="site-footer">
-        <div class="footer-container">
-            
-            <div class="footer-column brand-info">
-                <h3 class="footer-logo">Fundi<span>Connect</span></h3>
-                <p>Connecting you to trusted, vetted, and professional local artisans in Nairobi. Fast, secure, and reliable service at your doorstep.</p>
-                <div class="social-links">
-                    <a href="#" aria-label="Facebook">📘</a>
-                    <a href="#" aria-label="Twitter">🐦</a>
-                    <a href="#" aria-label="Instagram">📸</a>
-                    <a href="#" aria-label="LinkedIn">💼</a>
+            <div class="faq-item" style="background: #ffffff; border: 1px solid #cccccc; border-radius: 8px; overflow: hidden; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                <button class="faq-question" style="width: 100%; background: #ffffff; border: none; color: #1a1a1a; padding: 20px; text-align: left; font-size: 1.1rem; font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center; outline: none;">
+                    <span>What is Fundi Connect?</span>
+                    <span class="faq-icon" style="transition: transform 0.3s; color: #4285F4;">▼</span>
+                </button>
+                <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background: #f9f9f9;">
+                    <p style="padding: 20px; margin: 0; color: #444444; line-height: 1.6; font-size: 0.95rem;">
+                        Fundi Connect is a digital directory designed to connect local clients directly with skilled, trusted local artisans (Fundis)—such as plumbers, electricians, painters, and carpenters—right within Nairobi neighborhoods.
+                    </p>
                 </div>
             </div>
 
-            <div class="footer-column">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="register.php">Join As a Fundi</a></li>
-                    <li><a href="#">How it Works</a></li>
-                    <li><a href="#">Safety Guidelines</a></li>
+            <div class="faq-item" style="background: #ffffff; border: 1px solid #cccccc; border-radius: 8px; overflow: hidden; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                <button class="faq-question" style="width: 100%; background: #ffffff; border: none; color: #1a1a1a; padding: 20px; text-align: left; font-size: 1.1rem; font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center; outline: none;">
+                    <span>How do I contact a Fundi?</span>
+                    <span class="faq-icon" style="transition: transform 0.3s; color: #4285F4;">▼</span>
+                </button>
+                <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background: #f9f9f9;">
+                    <p style="padding: 20px; margin: 0; color: #444444; line-height: 1.6; font-size: 0.95rem;">
+                        It's simple! Use the category grid or search bar to locate the professional trade you need. Click the **"Chat on WhatsApp"** button on their card to automatically open a direct secure WhatsApp chat window with them.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item" style="background: #ffffff; border: 1px solid #cccccc; border-radius: 8px; overflow: hidden; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                <button class="faq-question" style="width: 100%; background: #ffffff; border: none; color: #1a1a1a; padding: 20px; text-align: left; font-size: 1.1rem; font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center; outline: none;">
+                    <span>Do clients pay any booking fees?</span>
+                    <span class="faq-icon" style="transition: transform 0.3s; color: #4285F4;">▼</span>
+                </button>
+                <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background: #f9f9f9;">
+                    <p style="padding: 20px; margin: 0; color: #444444; line-height: 1.6; font-size: 0.95rem;">
+                        No. Fundi Connect is completely free for clients looking for services. You negotiate pricing and settle service terms directly with your chosen artisan on WhatsApp.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-item" style="background: #ffffff; border: 1px solid #cccccc; border-radius: 8px; overflow: hidden; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                <button class="faq-question" style="width: 100%; background: #ffffff; border: none; color: #1a1a1a; padding: 20px; text-align: left; font-size: 1.1rem; font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center; outline: none;">
+                    <span>I am an artisan. How do I join the platform?</span>
+                    <span class="faq-icon" style="transition: transform 0.3s; color: #4285F4;">▼</span>
+                </button>
+                <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background: #f9f9f9;">
+                    <p style="padding: 20px; margin: 0; color: #444444; line-height: 1.6; font-size: 0.95rem;">
+                        Click on the **Register** link in the navigation menu, choose the **Fundi** role options, and create your account. Once logged in, go to your Workspace dashboard to update your phone line, trade specialization, and showcase profile avatar.
+                    </p>
+                </div>
+            </div>
+
+        </div> </section>
+     <!-- 5. Global Website Footer Section -->
+    <footer class="site-footer" style="
+        background: #111e29; 
+        color: #ffffff; 
+        margin-top: 60px;
+        /* BREAKOUT TRICK: Forces full screen width even inside a wrapper */
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        box-sizing: border-box;
+        padding: 60px 0 30px 0;
+    ">
+        <!-- Inner container ensures text stays perfectly aligned in the center grid -->
+        <div class="footer-container" style="
+            max-width: 1200px; 
+            margin: 0 auto; 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 40px; 
+            justify-content: space-between;
+            padding: 0 40px; /* Gives content breathing room away from the edges */
+            box-sizing: border-box;
+        ">
+            
+            <div class="footer-column brand-info" style="flex: 1; min-width: 250px;">
+                <h3 class="footer-logo" style="margin-bottom: 15px; font-size: 1.5rem; color: #4285F4;">Fundi<span style="color:#fff;">Connect</span></h3>
+                <p style="color: #cbd5e1; line-height: 1.6; font-size: 0.95rem;">Connecting you to trusted, vetted, and professional local artisans in Nairobi. Fast, secure, and reliable service at your doorstep.</p>
+                <div class="social-links" style="margin-top: 15px; display: flex; gap: 12px; font-size: 1.2rem;">
+                    <a href="#" aria-label="Facebook" style="text-decoration: none;">📘</a>
+                    <a href="#" aria-label="Twitter" style="text-decoration: none;">🐦</a>
+                    <a href="#" aria-label="Instagram" style="text-decoration: none;">📸</a>
+                    <a href="#" aria-label="LinkedIn" style="text-decoration: none;">💼</a>
+                </div>
+            </div>
+
+            <div class="footer-column" style="flex: 0.5; min-width: 160px;">
+                <h4 style="margin-bottom: 20px; font-size: 1.1rem; border-bottom: 2px solid #4285F4; display: inline-block; padding-bottom: 5px;">Quick Links</h4>
+                <ul style="list-style: none; padding: 0; margin: 0; line-height: 2.2;">
+                    <li><a href="index.php" style="color: #cbd5e1; text-decoration: none;">Home</a></li>
+                    <li><a href="register.php" style="color: #cbd5e1; text-decoration: none;">Join As a Fundi</a></li>
+                    <li><a href="#" style="color: #cbd5e1; text-decoration: none;">How it Works</a></li>
+                    <li><a href="#" style="color: #cbd5e1; text-decoration: none;">Safety Guidelines</a></li>
                 </ul>
             </div>
 
-            <div class="footer-column">
-                <h4>Support</h4>
-                <ul>
+            <div class="footer-column" style="flex: 0.5; min-width: 180px;">
+                <h4 style="margin-bottom: 20px; font-size: 1.1rem; border-bottom: 2px solid #4285F4; display: inline-block; padding-bottom: 5px;">Support</h4>
+                <ul style="list-style: none; padding: 0; margin: 0; line-height: 2.2; color: #cbd5e1;">
                     <li>📍 Nairobi, Kenya</li>
                     <li>📞 +254 700 000 000</li>
                     <li>✉️ support@fundiconnect.co.ke</li>
-                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#" style="color: #cbd5e1; text-decoration: none;">Terms & Conditions</a></li>
                 </ul>
             </div>
 
-            <div class="footer-column newsletter">
-                <h4>Stay Updated</h4>
-                <p>Subscribe to receive tips, safety updates, and discount service offers.</p>
-                <form id="newsletterForm" class="footer-form">
-                    <input type="email" id="newsletterEmail" placeholder="Enter your email" required>
-                    <button type="submit" class="btn-subscribe">Subscribe</button>
+            <div class="footer-column newsletter" style="flex: 1; min-width: 280px;">
+                <h4 style="margin-bottom: 20px; font-size: 1.1rem; border-bottom: 2px solid #4285F4; display: inline-block; padding-bottom: 5px;">Stay Updated</h4>
+                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Subscribe to receive tips, safety updates, and discount service offers.</p>
+                <form id="newsletterForm" class="footer-form" style="display: flex; width: 100%;">
+                    <input type="email" id="newsletterEmail" placeholder="Enter your email" required style="flex: 1; padding: 12px; border: 1px solid #334155; border-radius: 4px 0 0 4px; background: #1e293b; color: #fff; outline: none;">
+                    <button type="submit" class="btn-subscribe" style="background: #4285F4; color: white; border: none; padding: 12px 20px; border-radius: 0 4px 4px 0; cursor: pointer; font-weight: bold;">Subscribe</button>
                 </form>
                 <p id="newsletterMessage" class="newsletter-status"></p>
             </div>
 
         </div>
 
-        <div class="footer-bottom">
-            <div class="footer-bottom-content">
+        <!-- Horizontal divider line -->
+        <div style="max-width: 1200px; margin: 40px auto 0 auto; padding: 0 40px; box-sizing: border-box;">
+            <div style="border-top: 1px solid #334155; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; font-size: 0.85rem; color: #94a3b8;">
                 <p>&copy; <?php echo date('Y'); ?> Fundi Connect. All Rights Reserved.</p>
                 <p>Built with ❤️ for Kenyan Artisans.</p>
             </div>
         </div>
     </footer>
-
+    
     <script src="assets/scripts.js"></script>
 </body>
 </html>

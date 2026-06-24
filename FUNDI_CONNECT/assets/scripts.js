@@ -349,3 +349,27 @@ document.addEventListener("DOMContentLoaded", function () {
         alert(messages[currentLang].failed);
     }
 });
+///////FREQUENTLY ASKED QUESTIONS
+// Accordion Toggle JavaScript
+const faqQuestions = document.querySelectorAll(".faq-question");
+
+faqQuestions.forEach(question => {
+    question.addEventListener("click", function() {
+        const item = this.parentElement;
+        const answer = this.nextElementSibling;
+        const icon = this.querySelector(".faq-icon");
+
+        if (answer.style.maxHeight && answer.style.maxHeight !== "0px") {
+            answer.style.maxHeight = "0px";
+            icon.style.transform = "rotate(0deg)";
+        } else {
+            // Clear other active elements cleanly without styling colors manually
+            document.querySelectorAll(".faq-answer").forEach(el => el.style.maxHeight = "0px");
+            document.querySelectorAll(".faq-icon").forEach(el => el.style.transform = "rotate(0deg)");
+
+            // Expand clicked item answers safely
+            answer.style.maxHeight = answer.scrollHeight + "px";
+            icon.style.transform = "rotate(180deg)";
+        }
+    });
+});
