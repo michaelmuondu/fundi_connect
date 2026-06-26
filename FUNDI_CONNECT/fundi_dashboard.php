@@ -136,7 +136,7 @@ $feed_result = mysqli_query($conn, $feed_sql);
 
             <!-- Secure Sign Out Anchor boundaries -->
             <div class="footer-navigation">
-                <a href="logout.php" class="btn-logout-secure">🚪 Terminate Session (Log Out)</a>
+                <a href="login.php" class="btn-logout-secure">🚪 Terminate Session (Log Out)</a>
             </div>
 
         </div>
